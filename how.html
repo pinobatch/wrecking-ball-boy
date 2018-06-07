@@ -1,0 +1,153 @@
+<!DOCTYPE HTML><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Wrecking Ball Boy</title>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='docs/manual.css' rel='stylesheet' type='text/css'>
+<!--[if lt IE 9]>
+<script src="docs/html5shiv.js"></script>
+<![endif]-->
+<script src="docs/morphingboxes.js"></script>
+</script>
+</head><body>
+<h1>Wrecking Ball Boy</h1>
+<p>
+by Damian Yerrick
+</p>
+
+<div class="poembox">
+<img src="docs/character_concept_512.png">
+<div>
+<blockquote>
+How do you like to go up in a swing,<br>
+Up in the air so blue?<br>
+Oh, I do not think it the pleasantest thing<br>
+Ever a child can do!
+</blockquote><p>
+<small>Robert Louis Stevenson, "<a href="http://en.wikisource.org/wiki/The_Swing">The Swing</a>",<br>
+<i>A Child's Garden of Verses</i> (1885)</small>
+</p>
+</div></div>
+
+<p>
+This is a prototype of a puzzle platformer that I plan to port to the <abbr title="Nintendo Entertainment System">NES</abbr> once it's done. It stars a character who compensates for his lack of lower limbs by carrying a grappling hook and using it to swing from whatever object is above him.
+</p>
+
+<h2 id="Installation">Installation</h2>
+<p>
+First install Python 2.7 and Pygame. Windows users should download and run <a href="http://python.org/">Python 3.6 (Win32)</a> and then <code>py -m pip install pygame</code> from a Command Prompt. Linux users should usually install Pygame through the distribution's package manager (for example, on Debian or Ubuntu, <kbd>sudo apt install python3-pygame</kbd>).
+</p><p>
+Then run the file <code>wbb.py</code>. UNIX users may have to make it executable first (<kbd>chmod +x wbb.py</kbd>).
+</p>
+
+<h2 id="Controls">Controls</h2>
+<h3>Key bindings</h3>
+<div class="controldiagram">
+<img class="gamepad" src="docs/pad.png" alt="Controls in this situation:">
+<dl>
+<dt>Up</dt><dd class="up_button">Up Arrow</dd>
+<dt>Down</dt><dd class="down_button">Down Arrow</dd>
+<dt>Left</dt><dd class="left_button">Left</dd>
+<dt>Right</dt><dd class="right_button">Right</dd>
+<dt>A</dt><dd class="a_button">X</dd>
+<dt>B</dt><dd class="b_button">Not yet used</dd>
+</dl>
+</div><p>
+When you start the program, it scans the <abbr title="Universal Serial Bus">USB</abbr> ports for Xbox 360 Controllers or other game controllers. If a new controller has been plugged in, it asks you to press the button for each function and saves the bindings for next time in <code>wbb.kyb</code>. Otherwise, it defaults to keyboard controls. Or you can change this by pressing Tab on the screen that lists the controls.
+</p>
+
+<h3>On ground</h3>
+<div class="controldiagram">
+<img class="gamepad" src="docs/pad.png" alt="Controls in this situation:">
+<dl>
+<dt>Up</dt><dd class="up_button">Climb</dd>
+<dt>Down</dt><dd class="down_button">Back up</dd>
+<dt>Left</dt><dd class="left_button">Scoot</dd>
+<dt>Right</dt><dd class="right_button">Scoot</dd>
+<dt>A</dt><dd class="a_button">Push crate<br>Fire rope</dd>
+</dl>
+</div>
+<dl>
+<dt>Down+Left/Right</dt><dd>Scoot backward instead of turning</dd>
+<dt>Down+A</dt><dd>Pull a crate</dd>
+<dt>Direction+A</dt><dd>Fire rope at an angle</dd>
+</dl>
+
+<h3>On ladder</h3>
+<div class="controldiagram">
+<img class="gamepad" src="docs/pad.png" alt="Controls in this situation:">
+<dl>
+<dt>Up</dt><dd class="up_button">Ascend</dd>
+<dt>Down</dt><dd class="down_button">Descend</dd>
+<dt>Left</dt><dd class="left_button">Leave</dd>
+<dt>Right</dt><dd class="right_button">Leave</dd>
+<dt>A</dt><dd class="a_button">Fire rope</dd>
+</dl>
+</div><p>
+To enter a ladder from the top, scoot backward. To leave a ladder, anchor a rope and press away, or reach the top or bottom.
+</p>
+
+<h3>After shooting rope</h3>
+<div class="controldiagram">
+<img class="gamepad" src="docs/pad.png" alt="Controls in this situation:">
+<dl>
+<dt>Up</dt><dd class="up_button">Climb rope</dd>
+<dt>Down</dt><dd class="down_button">Pull crate</dd>
+<dt>Left</dt><dd class="left_button">Scoot</dd>
+<dt>Right</dt><dd class="right_button">Scoot</dd>
+<dt>A</dt><dd class="a_button">Let go</dd>
+</dl>
+</div><p>
+You won't be able to scoot more than twice your height away from where the rope is anchored.
+</p>
+
+<h3>While swinging</h3>
+<div class="controldiagram">
+<img class="gamepad" src="docs/pad.png" alt="Controls in this situation:">
+<dl>
+<dt>Up</dt><dd class="up_button">Ascend</dd>
+<dt>Down</dt><dd class="down_button">Descend</dd>
+<dt>Left</dt><dd class="left_button">Pump</dd>
+<dt>Right</dt><dd class="right_button">Pump</dd>
+<dt>A</dt><dd class="a_button">Let go</dd>
+</dl>
+</div>
+<dl>
+<dt>Up at top of rope</dt><dd>Climb onto wall, enter ladder, or hang from lamp fixture</dd>
+<dt>Down on land</dt><dd>Drop in front of certain floors</dd>
+</dl><p>
+There are two ways to pump while swinging: <a href="http://www.grinnell.edu/academic/physics/faculty/case/swing/">as a driven oscillator or as a parametric oscillator</a>. The "driven oscillator" is most like the common way of swinging on a swing: press Right or Left to lift your body while swinging forward, then let go while swinging backward. The "parametric oscillator" is a bit trickier, but it can help you whip yourself across large gaps: press Down for a little boost just before the highest point of the swing, and Up at other times. To kick a crate forward, descend just before you hit it.
+</p>
+
+<h2>Level editor</h2>
+
+<div class="morphing rinset">
+<figure>
+<img src="docs/markov_on.png">
+<figcaption>
+Showing entire objects. (Click to hide)</figcaption>
+</figure>
+<figure>
+<img src="docs/markov_off.png">
+<figcaption>
+Showing only top tiles. (Click to show)</figcaption>
+</figure>
+</div>
+
+<p>
+You can make your own levels now by running <code>leveleditor.py</code>.
+</p><dl>
+<dt>Arrows, Page Up, Page Down, Home, End, Mouse wheel, Click arrows under Screen</dt><dd>Scroll view</dd>
+<dt>Click tile number</dt><dd>Open tile picker dialog</dd>
+<dt>M, Click Fill</dt><dd>Toggle showing tops of objects vs. whole objects</dd>
+<dt>Left click</dt><dd>Place tiles on map</dd>
+<dt>Right click</dt><dd>Choose tile under cursor</dd>
+<dt>Space</dt><dd>Choose empty tile</dd>
+<dt>Insert</dt><dd>Choose column insertion</dd>
+<dt>Backspace, Delete</dt><dd>Choose column deletion (or insertion)</dd>
+<dt>Esc</dt><dd>Close editor, save level, and begin play-testing</dd>
+</dl><p>
+The levels are stored as column-wise Markov chains, where each tile is predicted from the tile above it. For example, it places solid dirt below a grass tile, the bottom half of a door below its top half, and post sections below a street lamp. This makes it easier to build a house, as you only need to define the roof. It also means you can't just have a floating platform; you need some other tile to hold it up.
+</p><p>
+If you want to suggest more tile types, meet me on <abbr title="Internet Relay Chat">IRC</abbr>. I hang out in <a href="http://wiki.nesdev.com/w/index.php/IRC">#nesdev on EFnet</a> under the nick "pino_p".
+</p>
+
+</body></html>

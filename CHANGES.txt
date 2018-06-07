@@ -1,0 +1,77 @@
+2013-08-xx
+* Added background music
+* Added no-anchor block type
+
+2013-03-21
+* Bashed block loses anchor
+* First level teaches pushing and pulling crates (both Pino and Nova
+  style) before the player has a chance to get trapped
+* Doesn't pull blocks if no solid ground behind player
+* Rounded gravity to 35/512 px/frame^2 and sine table to r/256 units
+* Moved status bar out of playfield
+* Split rope, sound effects, math, shearing, and player code to
+  separate files
+* Loads levels from files
+* Added level editor
+
+2013-03-17
+* Directionally solid tiles
+* Crate moving uses same in-column prediction as level loading
+* Can climb crate even if next to ladder
+* Removed failed attempt to antialias crates
+* Renders sound effects to wav if recording video
+* Movie (timed keypresses) recording and playback
+* Window has an icon
+* Preliminary Python 3 work (not yet tested)
+
+2013-03-08
+* Sprite shearing to save crate rotation frames
+* Neutral sitting pose
+* Longer steps for 25% faster scooting
+* Fixed failure to wrap when to the left of a lamp post
+* Climb to top of lamp post
+* New compact level format allows levels longer than 2 screens
+* Ctrl+P to save screenshot
+* Added narrow-screen CSS to manual
+
+2013-02-27
+* Precise shoulder rotation
+* Shear body and arms through full rotation
+* Doubled TumblingBlock frame rate
+* Split controls screen to make room for more help
+* Bindings screen: Tab to reconfigure or Esc to quit
+* Doesn't autoclimb when backing away from an edge
+* Sound for lifting butt while scooting and for falling blocks
+
+2013-02-21
+* Scooting off a cliff gives some ground clearance
+* Proportional font support
+* Bottom row is solid
+* Refactored some rope logic out of Player object
+* Ladder climbing
+* Fixed climbing into and out of floor after sliding
+* Swinging hitbox moves four times more smoothly
+* Begin to shear body sprite for smoother rotation
+
+2013-02-08
+* Pit: Resets when player falls below the map
+* Can throw rope in mid-air in any of 8 directions
+* Rotation when swinging is rate limited
+* Double size display
+* Can record video through avconv/ffmpeg
+* Scrolling
+* Sound effects
+* Includes a level designed by hubs, a Worms 2 fan
+
+2013-01-23
+* Fixed pulling through wall, freeze while backing into
+  block, and climbing empty space while facing away
+* Bash blocks forward by swinging into them
+* Pressing Down while on ground ends swinging
+* Rope is a pickup item
+
+2013-01-13
+* Collision detection reads four-corner neighborhood
+* Swinging COM moved about 12px out
+
+Changes before this were not logged

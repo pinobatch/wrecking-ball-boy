@@ -1,0 +1,44 @@
+html { background: #000 }
+body { background: #fff; color: #000; min-width: 16em; max-width: 32em; margin: 0 auto; padding: 0.5em 1em; font-family: "Droid Sans", sans-serif }
+h1,h2,h3,h4,h5,h6,p,ul,ol,dl { margin: 0.5em 0 }
+h2,h3,h4,h5,h6 { clear: both; margin-top: 0.7em }
+dt { font-weight: bold }
+dd { margin-left: 1.5em }
+kbd { color: #090 }
+img { max-width: 100% }
+
+/*
+html.js { background: #000 }
+*/
+
+.poembox { position: relative; max-width: 24em; margin: 0.5em auto }
+.poembox>img { display: block; width: 100% }
+.poembox>div { position: absolute; left: 1em; bottom: 1em; max-width: 100%; color: #fff; text-shadow: 0.05em 0.1em 0.1em #000, 0 0 0.4em #000 }
+.poembox>div a:link, .poembox>div a:visited { color: #9CF }
+.poembox>div blockquote { margin-left: 0 }
+
+.rinset { float: right; margin: 0 0 0.5em 1em }
+.rinset img { max-width: 100%; display: block; margin: 0 auto 0.5em }
+.rinset figure { margin: 0 }
+.rinset figure>figcaption { font-size: 80% }
+
+div.controldiagram { position: relative; float: right; margin: 0 0 0.5em 1em; width: 14em; height: 7em }
+div.controldiagram img.gamepad { display: block; width: 14em; height: 7em }
+/* We want this to show up when copied to clipboard, but not when displayed. Using display:none or visibility:hidden or height: 0px removes the element entirely from the copied text. So instead, use height: 1px */
+div.controldiagram dt { overflow: hidden; height: 1px }
+div.controldiagram dd { position: absolute; font-size: 87.5%; margin-left: 0; color: #fff; text-shadow: 0.05em 0.1em 0.1em #000, 0 0 0.4em #000 }
+div.controldiagram dd.a_button { right: 1.5em; bottom: 5.3em; text-align: right }
+div.controldiagram dd.b_button { right: 2em; top: 5.7em; text-align: right }
+div.controldiagram dd.up_button { left: 0; bottom: 5.7em; width: 8em; text-align: center }
+div.controldiagram dd.down_button { left: 0; width: 8em; text-align: center; top: 5.7em }
+div.controldiagram dd.left_button { left: 0em; top: 3.4em }
+div.controldiagram dd.right_button { right: 8em; top: 3.4em }
+
+div.morphing { min-width: 1em; min-height: 1em }
+
+/* changes for phones and other narrow devices */
+@media (max-width: 24em) {
+/* move insets to center */
+div.controldiagram, img.rinset { float: none; margin: 0.5em auto }
+.rinset { max-width: 100% }
+}
