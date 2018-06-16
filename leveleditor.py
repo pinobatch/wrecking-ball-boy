@@ -38,7 +38,7 @@ tile_descriptions = [
 
 def make_empty_level():
     import array
-    return {'screens':[array.array(b'H',[0xB001,0xC00F])],'start':(0,10)}
+    return {'screens':[array.array('H',[0xB001,0xC00F])],'start':(0,10)}
 
 def decode_entire_level(level):
     from levels import load_level_col
@@ -65,8 +65,8 @@ def pf_update_cols(pf, cols, xleft, xright=None, with_markov=True):
 
 def markov_fill_and_unfill(col):
     import array
-    filled = array.array(b'B')
-    unfilled = array.array(b'B')
+    filled = bytearray()
+    unfilled = bytearray()
     last_p = 0
     m = levels.markov
     for tileno in col:
@@ -133,7 +133,7 @@ def markov_optimize_screen(cols):
 
     # And at this point, we're ready to encode it
     import array
-    screendata = array.array(b'H', (
+    screendata = array.array('H', (
         (y << 12) | (x << 8) | c for (x, y, c) in objs
     ))
     return screendata
