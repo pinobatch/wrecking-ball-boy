@@ -1,4 +1,7 @@
 /build
-/__pycache__
+
 /dist
+/wbb.kyb
 /tasrec.txt
+/__pycache__
+/levels/editor.map

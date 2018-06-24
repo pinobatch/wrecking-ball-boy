@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 from __future__ import with_statement, division, print_function, unicode_literals
 import pygame as G
-try:
-    xrange
-except NameError:
-    xrange = range
 import levels
 
 with_double = True
@@ -43,7 +39,7 @@ def make_empty_level():
 def decode_entire_level(level):
     from levels import load_level_col
     return [load_level_col(None, level, x)
-            for x in xrange(0, 16 * len(level['screens']))]
+            for x in range(0, 16 * len(level['screens']))]
 
 def pf_update_cols(pf, cols, xleft, xright=None, with_markov=True):
     if xright is None:
@@ -54,7 +50,7 @@ def pf_update_cols(pf, cols, xleft, xright=None, with_markov=True):
         return
     empty_col = [0]*12
     m = levels.markov
-    for x in xrange(xleft, xright):
+    for x in range(xleft, xright):
         col = cols[x] if x < len(cols) else empty_col
         last_p = 0
         for y, p in enumerate(col):
@@ -88,7 +84,7 @@ def markov_optimize_screen(cols):
     # But first let's bucket sort them by Y so that we can find runs
     # of a given row that cover at least 3 unfilled.  The objects
     # are already sorted by X; sorting them by Y preserves this.
-    byrow = [[] for i in xrange(12)]
+    byrow = [[] for i in range(12)]
     for (x, y, c) in unfilled:
         byrow[y].append((x, c))
     objs = []
@@ -511,7 +507,7 @@ class TilePicker(Activity):
     def draw(self):
         self.draw_status_bar()
         if self.all_dirty:
-            self.dirty_tiles = xrange(len(levels.markov))
+            self.dirty_tiles = range(len(levels.markov))
             self.all_dirty = False
         for t in self.dirty_tiles:
             self.draw_single_tile(t)
@@ -545,7 +541,7 @@ def runonce(enl, font, vwf, level):
 
     lvltosave = {
         'screens': [markov_optimize_screen(e.cols[i:i + 16])
-                    for i in xrange(0, len(e.cols), 16)],
+                    for i in range(0, len(e.cols), 16)],
         'start': level['start']
     }
     return lvltosave

@@ -36,8 +36,7 @@ def encode_level(level):
                    for s in screens
                    for w in s
                    for b in ((w >> 8) & 0xFF, w & 0xFF))
-    screenbytes = bytearray(screenwords)
-    level = b"%d\n%s%s" % (len(level), level, screenbytes.tostring())
+    level = b"%d\n%s%s" % (len(level), level, bytes(screenwords))
     return level
 
 def decode_level(level):
