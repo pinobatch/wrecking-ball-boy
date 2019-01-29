@@ -5,14 +5,18 @@ from ascii import PyGtxt
 
 # For http://slashdot.org/comments.pl?sid=3205473&cid=41752211
 
-def dump_joysticks(verbose=True):
+def init_joysticks():
     global joysticks
+    try:
+        joysticks
+    except NameError:
+        joysticks = [G.joystick.Joystick(i) for i in range(G.joystick.get_count())]
+        for (i, j) in enumerate(joysticks):
+            j.init()
+    return joysticks
 
-##    print("Available fonts:")
-##    print("\n".join(G.font.get_fonts()))
-    joysticks = [G.joystick.Joystick(i) for i in range(G.joystick.get_count())]
-    for (i, j) in enumerate(joysticks):
-        j.init()
+def dump_joysticks(verbose=True):
+    joysticks = init_joysticks()
     if verbose:
         for j in joysticks:
             name = j.get_name().strip()
@@ -44,14 +48,19 @@ def draw_joystick_state(screen, font, j, y):
 
 def get_wrapped_names():
     from textwrap import TextWrapper
+    joysticks = init_joysticks()
     tw = TextWrapper(width=32)
     return [tw.wrap("%d: %s" % (i + 1, j.get_name().strip()))
             for (i, j) in enumerate(joysticks)]
 
 def enum_screen(screen, font, flipper=None):
+    joysticks = init_joysticks()
     names = get_wrapped_names()
     done = False
     flipper = flipper or G.display
+
+    topmargin = 8
+    lineht = font.ch
     while not done:
         for event in G.event.get():
             if event.type == G.KEYDOWN:
@@ -61,17 +70,17 @@ def enum_screen(screen, font, flipper=None):
                 done = True
 
         screen.fill((0, 0, 0))
-        y = 8
+        y = topmargin
         for j, name in zip(joysticks, names):
             for line in name:
                 font.textout(screen, line, 0, y)
-                y += 8
+                y += lineht
             draw_joystick_state(screen, font, j, y)
-            y += 8
+            y += lineht
         if not joysticks:
             font.textout(screen, "No joysticks.", 0, y)
-            y += 8
-        font.textout(screen, "Press Escape to quit", 0, y + 8)
+            y += lineht
+        font.textout(screen, "Press Escape to quit", 0, y + lineht)
         flipper.flip()
 
 axis_labels = {
@@ -114,6 +123,7 @@ def get_buttonlabels(jname):
     return match_name(buttonlabels_presets, jname)
 
 def format_binding(binding, buttonlabels=None):
+    joysticks = init_joysticks()
     if binding[0] == 'key':
         return 'key ' + G.key.name(binding[1])
     if binding[0] == 'mousebutton':
@@ -139,6 +149,7 @@ def format_binding(binding, buttonlabels=None):
     return " ".join(str(s) for s in binding)
 
 def get_bindings(screen, font, descs, confirm_button=-1, flipper=G.display):
+    joysticks = init_joysticks()
     names = get_wrapped_names()
     flipper = flipper or G.display
     out = []
@@ -151,6 +162,8 @@ def get_bindings(screen, font, descs, confirm_button=-1, flipper=G.display):
     confirmed = False
     clk = G.time.Clock()
     timeout = 1
+    topmargin = 8
+    line_ht = font.ch
     while out is not None and not confirmed:
         assigned = None
         for event in G.event.get():
@@ -207,22 +220,22 @@ def get_bindings(screen, font, descs, confirm_button=-1, flipper=G.display):
             bound_names[len(out)] = 'Press a button'
 
         screen.fill((0, 0, 0))
-        y = 8
+        y = topmargin
         for j, name in zip(joysticks, names):
             for line in name:
                 font.textout(screen, line, 0, y)
-                y += 8
+                y += line_ht
             draw_joystick_state(screen, font, j, y)
-            y += 8
+            y += line_ht
         if not joysticks:
             font.textout(screen, "No joysticks.", 0, y)
-            y += 8
+            y += line_ht
 
-        y += 8
+        y += line_ht
         for (action, button) in zip(descs, bound_names):
             font.textout(screen, "%s: %s" % (action, button), 0, y)
-            y += 8
-        y += 8
+            y += line_ht
+        y += line_ht
         if out is None:
             lines = ['Canceled.']
         elif len(out) >= len(descs):
@@ -233,7 +246,7 @@ def get_bindings(screen, font, descs, confirm_button=-1, flipper=G.display):
             lines = ['Press Esc to cancel']
         for line in lines:
             font.textout(screen, line, 0, y)
-            y += 8
+            y += line_ht
 
         clk.tick(60)
         if timeout > 0:
@@ -248,6 +261,7 @@ bindings -- a list of bindings returned from
 key -- output of pygame.key.get_pressed()
 
 """
+    joysticks = init_joysticks()
     vkeys = 0
     mouse_b = None
     for binding in bindings:
@@ -304,6 +318,7 @@ def text_to_bindings(bindings):
     return out
 
 def load_bindings(filename):
+    joysticks = init_joysticks()
     try:
         with open(filename, 'rU') as infp:
             lines = [line.strip() for line in infp]
@@ -332,6 +347,7 @@ def load_bindings(filename):
     return bindings
 
 def save_bindings(filename, bindings, comments=None):
+    joysticks = init_joysticks()
     out = [
         "\n".join(j.get_name().strip() for j in joysticks),
         '\n\n',
