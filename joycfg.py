@@ -320,7 +320,7 @@ def text_to_bindings(bindings):
 def load_bindings(filename):
     joysticks = init_joysticks()
     try:
-        with open(filename, 'rU') as infp:
+        with open(filename, 'r') as infp:
             lines = [line.strip() for line in infp]
     except IOError:
         lines = []

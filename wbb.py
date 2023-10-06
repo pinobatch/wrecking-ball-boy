@@ -300,7 +300,7 @@ def load_tas(filename):
 
     out = bytearray()
     tasbindings = {'U': VK_UP, 'D': VK_DOWN, 'L': VK_LEFT, 'R': VK_RIGHT, 'A': VK_A}
-    with open(movie_filename, 'rU') as infp:
+    with open(movie_filename, 'r') as infp:
         lines = [_f for _f in (line.strip().split('#', 1)[0] for line in infp) if _f]
     for line in lines:
         line = [c.strip() for c in line.split()[:2]]
